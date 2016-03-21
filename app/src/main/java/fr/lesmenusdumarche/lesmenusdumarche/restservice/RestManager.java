@@ -1,5 +1,6 @@
 package fr.lesmenusdumarche.lesmenusdumarche.restservice;
 
+import fr.lesmenusdumarche.lesmenusdumarche.domain.NavigationStep;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
@@ -17,13 +18,13 @@ public class RestManager {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    private static final MarketService MARKET_SERVICE = REST_ADAPTER.create(MarketService.class);
     private static final ReceipeService RECEIPE_SERVICE = REST_ADAPTER.create(ReceipeService.class);
+    private static final NavigationStepService NAVIGATIONSTEP_SERVICE = REST_ADAPTER.create(NavigationStepService.class);
 
-    public static MarketService getMarketService() {
-        return MARKET_SERVICE;
-    }
     public static ReceipeService getReceipeService() {
         return RECEIPE_SERVICE;
+    }
+    public static NavigationStepService getNavigationStepService() {
+        return NAVIGATIONSTEP_SERVICE;
     }
 }
