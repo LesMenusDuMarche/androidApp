@@ -13,9 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import fr.lesmenusdumarche.lesmenusdumarche.R;
+import fr.lesmenusdumarche.lesmenusdumarche.cache.RecipeCacher;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.CheckedReceipe;
 
-public class ReceipesActivity extends AppCompatActivity {
+public class RecipesActivity extends AppCompatActivity {
     private ListView maListViewPerso;
     private SimpleAdapter mListAdapter;
     private List<HashMap<String, String>> listItem;
@@ -27,6 +28,10 @@ public class ReceipesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipes);
 
+        // Load receipes
+        loadReceipes();
+
+        // Initialize listView
         initList();
 
         //initialisation des pour les recettes cochées
@@ -39,6 +44,10 @@ public class ReceipesActivity extends AppCompatActivity {
         //On attribue à notre listView l'adapter que l'on vient de créer
         maListViewPerso.setAdapter(mListAdapter);
 
+    }
+
+    private void loadReceipes() {
+        RecipeCacher recipeCacher = new RecipeCacher();
     }
 
     private void initList() {
