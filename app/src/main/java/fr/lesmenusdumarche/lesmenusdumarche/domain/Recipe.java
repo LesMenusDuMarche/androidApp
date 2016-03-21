@@ -20,10 +20,6 @@ public class Recipe extends PersistableEntity {
 
     @Getter
     @Setter
-    Long id;
-
-    @Getter
-    @Setter
     String title;
 
     @Getter

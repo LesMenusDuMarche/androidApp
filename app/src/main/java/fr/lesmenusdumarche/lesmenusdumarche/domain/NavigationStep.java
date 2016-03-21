@@ -28,7 +28,7 @@ public class NavigationStep {
     private Seller seller;
 
     @Getter @Setter
-    private List<IngredientInReceipe> ingredients;
+    private List<IngredientInRecipe> ingredients;
 
     @Getter @Setter
     private boolean done = false;
