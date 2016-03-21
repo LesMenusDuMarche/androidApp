@@ -28,8 +28,9 @@ public class RecipesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipes);
 
-        // Load receipes
-        loadReceipes();
+        // Load receipes from REST to DB
+        RecipeCacher recipeCacher = new RecipeCacher();
+        recipeCacher.cacheFromRest();
 
         // Initialize listView
         initList();
@@ -44,10 +45,6 @@ public class RecipesActivity extends AppCompatActivity {
         //On attribue à notre listView l'adapter que l'on vient de créer
         maListViewPerso.setAdapter(mListAdapter);
 
-    }
-
-    private void loadReceipes() {
-        RecipeCacher recipeCacher = new RecipeCacher();
     }
 
     private void initList() {
