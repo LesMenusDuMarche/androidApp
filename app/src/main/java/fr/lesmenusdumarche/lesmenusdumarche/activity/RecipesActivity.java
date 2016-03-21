@@ -1,12 +1,19 @@
 package fr.lesmenusdumarche.lesmenusdumarche.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatCheckBox;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,87 +22,178 @@ import java.util.List;
 import fr.lesmenusdumarche.lesmenusdumarche.R;
 import fr.lesmenusdumarche.lesmenusdumarche.cache.RecipeCacher;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.CheckedReceipe;
+import fr.lesmenusdumarche.lesmenusdumarche.domain.IngredientInRecipe;
+import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
 
 public class RecipesActivity extends AppCompatActivity {
-    private ListView maListViewPerso;
-    private SimpleAdapter mListAdapter;
-    private List<HashMap<String, String>> listItem;
 
-    private List<String> checkedReceipeNames;
+    private Button validateRecipesButton;
+    private ListView recipesListView;
+    private RecipeListViewAdapater recipeListViewAdapter;
+    private List<Recipe> recipes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipes);
 
-        // Load receipes from REST to DB
-        RecipeCacher recipeCacher = new RecipeCacher();
-        recipeCacher.cacheFromRest();
+        // Récupération des recettes
+        recipes = getRecipes();
+        recipeListViewAdapter = new RecipeListViewAdapater(recipes);
 
-        // Initialize listView
-        initList();
+        // Références aux widgets de la vue
+        recipesListView = (ListView) findViewById(R.id.recipes_list_view);
+        validateRecipesButton = (Button) findViewById(R.id.validate_recipes);
 
-        //initialisation des pour les recettes cochées
-        this.checkedReceipeNames = new ArrayList<>();
+        // Listener sur le bouton de validation
+        onValidateListener();
 
-        //Création d'un SimpleAdapter qui se chargera de mettre les items présent dans notre list (listItem) dans la vue affichageitem
-        mListAdapter = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.list_recette_item,
-                new String[] {"recette_nom", "recette_description"}, new int[] {R.id.recette_nom, R.id.recette_description});
-
-        //On attribue à notre listView l'adapter que l'on vient de créer
-        maListViewPerso.setAdapter(mListAdapter);
+        // Affichage
+        recipesListView.setAdapter(recipeListViewAdapter);
 
     }
 
-    private void initList() {
-        //Récupération de la listview créée dans le fichier main.xml
-        maListViewPerso = (ListView) findViewById(R.id.list_recette);
+    private void onValidateListener(){
+        validateRecipesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String text = "";
+                ArrayList<Recipe> recipes =  recipeListViewAdapter.getSelectedRecipes();
+               for(Recipe recipe : recipes){
+                   text += recipe.getTitle() + "\n";
+               }
+                Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
+                toast.show();
 
-        //TODO modifier quand base faite
-        //Création de la ArrayList qui nous permettra de remplire la listView
-        listItem = new ArrayList<HashMap<String, String>>();
-
-        //temporaire pour les tests
-        HashMap<String, String> map;
-        map = new HashMap<String, String>();
-        map.put("recette_nom", "Recette");
-        map.put("recette_description", "Descripion");
-        //enfin on ajoute cette hashMap dans la arrayList
-        listItem.add(map);
-
-        map = new HashMap<String, String>();
-        map.put("recette_nom", "Recette2");
-        map.put("recette_description", "Descripion2");
-        //enfin on ajoute cette hashMap dans la arrayList
-        listItem.add(map);
-
-        //appeler load() pour charger en base
-        //load();
-        //TODO fin
+            }
+        });
     }
 
-    //Recharge les recettes TODO quand la base sera faite
-    private void load() {
+    private List<Recipe> getRecipes(){
 
-        //TODO charger les éléments depuis la base
+        List<Recipe> recipes = new ArrayList<Recipe>();
 
+        Recipe recipe = new Recipe();
+        recipe.setBody("<html/>");
+        recipe.setTitle("Porc au Caramel");
+        List<IngredientInRecipe> ingredients = new ArrayList<IngredientInRecipe>();
+        ingredients.add(new IngredientInRecipe(0L, "Echine de porc", "1.5Kg"));
+        ingredients.add(new IngredientInRecipe(1L, "Oignons", "10"));
+        recipe.setIngredients(ingredients);
+        recipes.add(recipe);
+
+        recipe = new Recipe();
+        recipe.setBody("<html/>");
+        recipe.setTitle("Crumble aux pommes");
+        ingredients = new ArrayList<IngredientInRecipe>();
+        ingredients.add(new IngredientInRecipe(0L, "Pommes", "4"));
+        ingredients.add(new IngredientInRecipe(1L, "Cassonade", "150g"));
+        recipe.setIngredients(ingredients);
+        recipes.add(recipe);
+
+        return recipes;
     }
 
-    public void click_on_checkbox(View v){
-        AppCompatCheckBox checkBox = (AppCompatCheckBox)v;
-        if(checkBox.isChecked()){
-            checkedReceipeNames.add(((AppCompatCheckBox) v).getText().toString());
+
+    private class RecipeListViewAdapater extends BaseAdapter{
+
+        private List<DecoratedRecipe> decoratedRecipes = new ArrayList<DecoratedRecipe>();
+
+        // Constructeur qui instancie la liste de recette décorée
+        public RecipeListViewAdapater(List<Recipe> recipes){
+            for(Recipe recipe : recipes){
+                decoratedRecipes.add(new DecoratedRecipe(recipe));
+            }
+        }
+
+        public ArrayList<Recipe> getSelectedRecipes(){
+            ArrayList<Recipe> selectedRecipes = new ArrayList<Recipe>();
+            for(DecoratedRecipe dr : decoratedRecipes){
+                if(dr.isSelected){
+                    selectedRecipes.add(dr.getRecipe());
+                }
+            }
+            return selectedRecipes;
+        }
+
+        @Override
+        public int getCount() {
+            return recipes.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return recipes.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        // Classe contenant une recette et un booléen selectionné/pas sélectionné
+        private class DecoratedRecipe{
+
+            private boolean isSelected;
+            private Recipe recipe;
+
+            public DecoratedRecipe(Recipe recipe){
+                this.recipe = recipe;
+                isSelected = false;
+            }
+
+            public boolean isSelected() {
+                return isSelected;
+            }
+
+            public void setIsSelected(boolean isSelected) {
+                this.isSelected = isSelected;
+            }
+
+            public Recipe getRecipe(){
+                return recipe;
+            }
+        }
+
+        private class RecipeHolder {
+            public CheckBox recipeCheckbox;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            View v = convertView;
+            RecipeHolder holder = new RecipeHolder();
+
+            if (convertView == null) {
+
+                // On inflate la listView
+                LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                v = inflater.inflate(R.layout.list_recette_item, null);
+
+                // On récupère la checkbox et on lui assigne un onClickListener pour mettre à jour le booléen correspondant
+                final CheckBox recipeCheckbox = (CheckBox) v.findViewById(R.id.recipe_checkbox);
+                recipeCheckbox.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        decoratedRecipes
+                                .get(position)
+                                .setIsSelected(((CheckBox) v).isChecked());
+                    }
+                });
+                holder.recipeCheckbox = recipeCheckbox;
+                v.setTag(holder);
+            }
+            else
+                holder = (RecipeHolder) v.getTag();
+
+            // Affichage du texte
+            Recipe recipe = decoratedRecipes.get(position).getRecipe();
+            holder.recipeCheckbox.setText(recipe.getTitle());
+
+            return v;
         }
     }
-
-    public void valider_choix_recettes(View v) {
-        Intent intent = new Intent(this, MainActivity.class);
-
-        CheckedReceipe checkedReceipe = new CheckedReceipe(this.checkedReceipeNames);
-
-        intent.putExtra("checkedReceipe",checkedReceipe);
-
-        setResult(RESULT_OK, intent);
-        finish();
-    }
 }
+
