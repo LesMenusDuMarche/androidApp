@@ -15,6 +15,8 @@ import java.util.List;
 import fr.lesmenusdumarche.lesmenusdumarche.R;
 import fr.lesmenusdumarche.lesmenusdumarche.cache.RecipeCacher;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.CheckedReceipe;
+import fr.lesmenusdumarche.lesmenusdumarche.domain.IngredientInRecipe;
+import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
 
 public class RecipesActivity extends AppCompatActivity {
     private ListView maListViewPerso;
@@ -23,23 +25,26 @@ public class RecipesActivity extends AppCompatActivity {
 
     private List<String> checkedReceipeNames;
 
+    private List<Recipe> recipes;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipes);
 
-        // Load receipes
-        loadReceipes();
-
-        // Initialize listView
-        initList();
+        recipes = initList();
 
         //initialisation des pour les recettes cochées
         this.checkedReceipeNames = new ArrayList<>();
 
         //Création d'un SimpleAdapter qui se chargera de mettre les items présent dans notre list (listItem) dans la vue affichageitem
-        mListAdapter = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.list_recette_item,
-                new String[] {"recette_nom", "recette_description"}, new int[] {R.id.recette_nom, R.id.recette_description});
+        mListAdapter = new SimpleAdapter (
+                getBaseContext(),
+                listItem,
+                R.layout.list_recette_item,
+                new String[] {"recette_nom", "recette_description"},
+                new int[] {R.id.recette_nom, R.id.recette_description});
 
         //On attribue à notre listView l'adapter que l'on vient de créer
         maListViewPerso.setAdapter(mListAdapter);
@@ -50,31 +55,29 @@ public class RecipesActivity extends AppCompatActivity {
         RecipeCacher recipeCacher = new RecipeCacher();
     }
 
-    private void initList() {
-        //Récupération de la listview créée dans le fichier main.xml
-        maListViewPerso = (ListView) findViewById(R.id.list_recette);
+    private List<Recipe> initList() {
 
-        //TODO modifier quand base faite
-        //Création de la ArrayList qui nous permettra de remplire la listView
-        listItem = new ArrayList<HashMap<String, String>>();
+        List<Recipe> recipes = new ArrayList<Recipe>();
 
-        //temporaire pour les tests
-        HashMap<String, String> map;
-        map = new HashMap<String, String>();
-        map.put("recette_nom", "Recette");
-        map.put("recette_description", "Descripion");
-        //enfin on ajoute cette hashMap dans la arrayList
-        listItem.add(map);
+        Recipe recipe = new Recipe();
+        recipe.setBody("<html/>");
+        recipe.setTitle("Porc au Caramel");
+        List<IngredientInRecipe> ingredients = new ArrayList<IngredientInRecipe>();
+        ingredients.add(new IngredientInRecipe(0L, "Echine de porc", "1.5Kg"));
+        ingredients.add(new IngredientInRecipe(1L, "Oignons", "10"));
+        recipe.setIngredients(ingredients);
+        recipes.add(recipe);
 
-        map = new HashMap<String, String>();
-        map.put("recette_nom", "Recette2");
-        map.put("recette_description", "Descripion2");
-        //enfin on ajoute cette hashMap dans la arrayList
-        listItem.add(map);
+        recipe = new Recipe();
+        recipe.setBody("<html/>");
+        recipe.setTitle("Crumble aux pommes");
+        ingredients = new ArrayList<IngredientInRecipe>();
+        ingredients.add(new IngredientInRecipe(0L, "Pommes", "4"));
+        ingredients.add(new IngredientInRecipe(1L, "Cassonade", "150g"));
+        recipe.setIngredients(ingredients);
+        recipes.add(recipe);
 
-        //appeler load() pour charger en base
-        //load();
-        //TODO fin
+        return recipes;
     }
 
     //Recharge les recettes TODO quand la base sera faite
@@ -93,7 +96,7 @@ public class RecipesActivity extends AppCompatActivity {
 
     public void valider_choix_recettes(View v) {
         Intent intent = new Intent(this, MainActivity.class);
-
+        mListAdapter.get
         CheckedReceipe checkedReceipe = new CheckedReceipe(this.checkedReceipeNames);
 
         intent.putExtra("checkedReceipe",checkedReceipe);
