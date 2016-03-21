@@ -1,5 +1,7 @@
 package fr.lesmenusdumarche.lesmenusdumarche.domain;
 
+import java.util.List;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -23,7 +25,10 @@ public class NavigationStep {
     private Long longitude;
 
     @Getter @Setter
-    private IngredientInReceipe ingredient;
+    private Seller seller;
+
+    @Getter @Setter
+    private List<IngredientInReceipe> ingredients;
 
     @Getter @Setter
     private boolean done = false;
