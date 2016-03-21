@@ -34,7 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MenusActivity"></activity>
+        <activity android:name=".activity.ReceipesActivity"></activity>
     </application>
 
 </manifest>

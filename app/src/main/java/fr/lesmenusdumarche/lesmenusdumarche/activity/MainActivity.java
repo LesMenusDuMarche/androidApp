@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     static final int PICK_CONTACT_REQUEST = 1;  // The request code
 
     public void Selection_recettes(View v) {
-        Intent intent = new Intent(this, MenusActivity.class);
+        Intent intent = new Intent(this, ReceipesActivity.class);
         startActivityForResult(intent, PICK_CONTACT_REQUEST);
     }
 }

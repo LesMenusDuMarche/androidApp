@@ -15,7 +15,7 @@ import java.util.List;
 import fr.lesmenusdumarche.lesmenusdumarche.R;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.CheckedReceipe;
 
-public class MenusActivity extends AppCompatActivity {
+public class ReceipesActivity extends AppCompatActivity {
     private ListView maListViewPerso;
     private SimpleAdapter mListAdapter;
     private List<HashMap<String, String>> listItem;
@@ -25,7 +25,7 @@ public class MenusActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_menus);
+        setContentView(R.layout.activity_receipes);
 
         initList();
 
