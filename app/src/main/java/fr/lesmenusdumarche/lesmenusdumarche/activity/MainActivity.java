@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import fr.lesmenusdumarche.lesmenusdumarche.R;
-import fr.lesmenusdumarche.lesmenusdumarche.cache.MarketCacher;
 
 public class MainActivity extends AppCompatActivity {
 
