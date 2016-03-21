@@ -1,21 +1,26 @@
 package fr.lesmenusdumarche.lesmenusdumarche.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import fr.lesmenusdumarche.lesmenusdumarche.R;
+import fr.lesmenusdumarche.lesmenusdumarche.domain.CheckedReceipe;
 
 public class Selection extends AppCompatActivity {
     private ListView maListViewPerso;
     private SimpleAdapter mListAdapter;
-    private ArrayList<HashMap<String, String>> listItem;
+    private List<HashMap<String, String>> listItem;
+
+    private List<String> checkedReceipeNames;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,9 @@ public class Selection extends AppCompatActivity {
         setContentView(R.layout.activity_selection);
 
         initList();
+
+        //initialisation des pour les recettes cochées
+        this.checkedReceipeNames = new ArrayList<>();
 
         //Création d'un SimpleAdapter qui se chargera de mettre les items présent dans notre list (listItem) dans la vue affichageitem
         mListAdapter = new SimpleAdapter (this.getBaseContext(), listItem, R.layout.list_recette_item,
@@ -37,6 +45,7 @@ public class Selection extends AppCompatActivity {
         //Récupération de la listview créée dans le fichier main.xml
         maListViewPerso = (ListView) findViewById(R.id.list_recette);
 
+        //TODO modifier quand base faite
         //Création de la ArrayList qui nous permettra de remplire la listView
         listItem = new ArrayList<HashMap<String, String>>();
 
@@ -53,30 +62,34 @@ public class Selection extends AppCompatActivity {
         map.put("recette_description", "Descripion2");
         //enfin on ajoute cette hashMap dans la arrayList
         listItem.add(map);
+
+        //appeler load() pour charger en base
+        //load();
+        //TODO fin
     }
 
-    //Recharge les recettes TODO quand la base sera faite, modifier le test
+    //Recharge les recettes TODO quand la base sera faite
     private void load() {
 
         //TODO charger les éléments depuis la base
-        mListAdapter.notifyDataSetChanged();
 
     }
 
-    //TODO
-    public void valider_choix_recettes(View v){
-
-        for(int i = 0; i < maListViewPerso.getCount(); i++) {
-            HashMap<String, String> map = (HashMap<String, String>) maListViewPerso.getItemAtPosition(i);
-            map.get("recette_nom");
-        }
-    }
-
-    //TODO
     public void click_on_checkbox(View v){
-        CheckBox checkBox = (CheckBox)v;
+        AppCompatCheckBox checkBox = (AppCompatCheckBox)v;
         if(checkBox.isChecked()){
-            v = null;
+            checkedReceipeNames.add(((AppCompatCheckBox) v).getText().toString());
         }
+    }
+
+    public void valider_choix_recettes(View v) {
+        Intent intent = new Intent(this, MainActivity.class);
+
+        CheckedReceipe checkedReceipe = new CheckedReceipe(this.checkedReceipeNames);
+
+        intent.putExtra("checkedReceipe",checkedReceipe);
+
+        setResult(RESULT_OK, intent);
+        finish();
     }
 }

@@ -1,11 +1,10 @@
 package fr.lesmenusdumarche.lesmenusdumarche.activity;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +23,11 @@ public class MainActivity extends AppCompatActivity {
 
         Call<List<NavigationStep>> stepsRequest = RestManager.getNavigationStepService().list(new ArrayList<Recipe>());
 
-        try {
+        /*try {
             List<NavigationStep> steps = stepsRequest.execute().body();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
     }
 
