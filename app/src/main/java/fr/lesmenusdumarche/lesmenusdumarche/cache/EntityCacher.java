@@ -17,7 +17,7 @@ import retrofit2.Response;
  * EntityCacher class
  * Caches in database the response of rest webservice, for all persisted entities of domain
  */
-public abstract class EntityCacher<RestService, T extends PersistableEntity> {
+public abstract class EntityCacher<T extends PersistableEntity> {
 
     /**
      * Rest call

@@ -9,7 +9,7 @@ import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;
  *
  * Cacher for Receipe entities
  */
-public class RecipeCacher extends EntityCacher<RecipeService, Recipe> {
+public class RecipeCacher extends EntityCacher<Recipe> {
 
     public RecipeCacher() {
         restEntities = RestManager.getRecipeService().list();
