@@ -7,7 +7,6 @@ import java.util.List;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Market;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.PersistableEntity;
 import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;
-import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestService;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
