@@ -26,5 +26,5 @@ public class NavigationStep {
     private IngredientInReceipe ingredient;
 
     @Getter @Setter
-    private boolean done;
+    private boolean done = false;
 }
