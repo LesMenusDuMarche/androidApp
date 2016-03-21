@@ -1,10 +1,8 @@
 package fr.lesmenusdumarche.lesmenusdumarche.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.AppCompatCheckBox;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +10,12 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import fr.lesmenusdumarche.lesmenusdumarche.R;
-import fr.lesmenusdumarche.lesmenusdumarche.cache.RecipeCacher;
-import fr.lesmenusdumarche.lesmenusdumarche.domain.CheckedReceipe;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.IngredientInRecipe;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
 
@@ -29,7 +23,7 @@ public class RecipesActivity extends AppCompatActivity {
 
     private Button validateRecipesButton;
     private ListView recipesListView;
-    private RecipeListViewAdapater recipeListViewAdapter;
+    private RecipeListViewAdapter recipeListViewAdapter;
     private List<Recipe> recipes;
 
     @Override
@@ -40,7 +34,7 @@ public class RecipesActivity extends AppCompatActivity {
 
         // Récupération des recettes
         recipes = getRecipes();
-        recipeListViewAdapter = new RecipeListViewAdapater(recipes);
+        recipeListViewAdapter = new RecipeListViewAdapter(recipes);
 
         // Références aux widgets de la vue
         recipesListView = (ListView) findViewById(R.id.recipes_list_view);
@@ -96,12 +90,12 @@ public class RecipesActivity extends AppCompatActivity {
     }
 
 
-    private class RecipeListViewAdapater extends BaseAdapter{
+    private class RecipeListViewAdapter extends BaseAdapter{
 
         private List<DecoratedRecipe> decoratedRecipes = new ArrayList<DecoratedRecipe>();
 
         // Constructeur qui instancie la liste de recette décorée
-        public RecipeListViewAdapater(List<Recipe> recipes){
+        public RecipeListViewAdapter(List<Recipe> recipes){
             for(Recipe recipe : recipes){
                 decoratedRecipes.add(new DecoratedRecipe(recipe));
             }
