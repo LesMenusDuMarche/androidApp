@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*Call<List<NavigationStep>> stepsRequest = RestManager.getNavigationStepService().list(new ArrayList<Recipe>());
+        Call<List<NavigationStep>> stepsRequest = RestManager.getNavigationStepService().list(new ArrayList<Recipe>());
 
         stepsRequest.enqueue(new Callback<List<NavigationStep>>() {
             @Override
@@ -38,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
             public void onFailure(Call<List<NavigationStep>> call, Throwable t) {
                 Log.i("Toto", "toto");
             }
-        });*/
+        });
 
     }
 
     static final int PICK_CONTACT_REQUEST = 1;  // The request code
 
     public void Selection_recettes(View v) {
-        Intent intent = new Intent(this, Selection.class);
+        Intent intent = new Intent(this, SelectionActivity.class);
         startActivityForResult(intent, PICK_CONTACT_REQUEST);
     }
 }

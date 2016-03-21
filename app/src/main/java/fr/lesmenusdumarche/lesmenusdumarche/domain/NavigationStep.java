@@ -1,5 +1,7 @@
 package fr.lesmenusdumarche.lesmenusdumarche.domain;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -19,9 +21,11 @@ import lombok.Setter;
 public class NavigationStep {
 
     @Getter @Setter
+    @SerializedName("lat")
     private Long latitude;
 
     @Getter @Setter
+    @SerializedName("long")
     private Long longitude;
 
     @Getter @Setter

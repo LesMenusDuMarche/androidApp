@@ -15,7 +15,7 @@ import java.util.List;
 import fr.lesmenusdumarche.lesmenusdumarche.R;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.CheckedReceipe;
 
-public class Selection extends AppCompatActivity {
+public class SelectionActivity extends AppCompatActivity {
     private ListView maListViewPerso;
     private SimpleAdapter mListAdapter;
     private List<HashMap<String, String>> listItem;
