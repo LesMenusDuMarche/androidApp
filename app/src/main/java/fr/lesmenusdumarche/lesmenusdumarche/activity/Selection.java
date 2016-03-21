@@ -3,7 +3,7 @@ package fr.lesmenusdumarche.lesmenusdumarche.activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -31,14 +31,6 @@ public class Selection extends AppCompatActivity {
         //On attribue à notre listView l'adapter que l'on vient de créer
         maListViewPerso.setAdapter(mListAdapter);
 
-        maListViewPerso.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //on récupère la HashMap contenant les infos de notre item (titre, description, img)
-                HashMap<String, String> map = (HashMap<String, String>) maListViewPerso.getItemAtPosition(position);
-
-            }
-        });
     }
 
     private void initList() {
@@ -48,11 +40,7 @@ public class Selection extends AppCompatActivity {
         //Création de la ArrayList qui nous permettra de remplire la listView
         listItem = new ArrayList<HashMap<String, String>>();
 
-        //Création d'une HashMap pour insérer les informations du premier item de notre listView
-        load();
-    }
-
-    private void load() {
+        //temporaire pour les tests
         HashMap<String, String> map;
         map = new HashMap<String, String>();
         map.put("recette_nom", "Recette");
@@ -60,5 +48,35 @@ public class Selection extends AppCompatActivity {
         //enfin on ajoute cette hashMap dans la arrayList
         listItem.add(map);
 
+        map = new HashMap<String, String>();
+        map.put("recette_nom", "Recette2");
+        map.put("recette_description", "Descripion2");
+        //enfin on ajoute cette hashMap dans la arrayList
+        listItem.add(map);
+    }
+
+    //Recharge les recettes TODO quand la base sera faite, modifier le test
+    private void load() {
+
+        //TODO charger les éléments depuis la base
+        mListAdapter.notifyDataSetChanged();
+
+    }
+
+    //TODO
+    public void valider_choix_recettes(View v){
+
+        for(int i = 0; i < maListViewPerso.getCount(); i++) {
+            HashMap<String, String> map = (HashMap<String, String>) maListViewPerso.getItemAtPosition(i);
+            map.get("recette_nom");
+        }
+    }
+
+    //TODO
+    public void click_on_checkbox(View v){
+        CheckBox checkBox = (CheckBox)v;
+        if(checkBox.isChecked()){
+            v = null;
+        }
     }
 }
