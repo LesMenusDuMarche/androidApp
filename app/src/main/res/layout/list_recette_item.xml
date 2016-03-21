@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:paddingLeft="10px"
+        android:layout_weight="1"
+        >
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/recette_nom"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textStyle="bold"
+            />
+
+        <TextView android:id="@+id/recette_description"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:textSize="@dimen/activity_horizontal_margin"
+            android:layout_alignRight="@+id/recette_nom"
+            android:layout_alignEnd="@+id/recette_nom" />
+
+    </LinearLayout>
+
+</LinearLayout>
