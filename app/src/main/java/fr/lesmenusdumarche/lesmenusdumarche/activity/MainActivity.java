@@ -3,20 +3,9 @@ package fr.lesmenusdumarche.lesmenusdumarche.activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import fr.lesmenusdumarche.lesmenusdumarche.R;
-import fr.lesmenusdumarche.lesmenusdumarche.domain.NavigationStep;
-import fr.lesmenusdumarche.lesmenusdumarche.domain.Receipe;
-import fr.lesmenusdumarche.lesmenusdumarche.restservice.NavigationStepService;
-import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
 

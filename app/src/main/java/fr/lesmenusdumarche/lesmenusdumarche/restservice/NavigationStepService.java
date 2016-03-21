@@ -3,10 +3,9 @@ package fr.lesmenusdumarche.lesmenusdumarche.restservice;
 import java.util.List;
 
 import fr.lesmenusdumarche.lesmenusdumarche.domain.NavigationStep;
-import fr.lesmenusdumarche.lesmenusdumarche.domain.Receipe;
+import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -14,5 +13,5 @@ import retrofit2.http.POST;
  */
 public interface NavigationStepService {
     @POST("navigationstep/")
-    Call<List<NavigationStep>> list(@Body List<Receipe> receipes);
+    Call<List<NavigationStep>> list(@Body List<Recipe> receipes);
 }
