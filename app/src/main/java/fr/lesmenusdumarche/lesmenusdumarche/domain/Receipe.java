@@ -6,19 +6,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 /**
  * Created by maxime on 17/03/2016.
+ *
+ * Represents a cook receipe
  */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Receipe {
+public class Receipe extends PersistableEntity {
 
     @Getter
     @Setter
-    Double id;
+    Long id;
 
     @Getter
     @Setter

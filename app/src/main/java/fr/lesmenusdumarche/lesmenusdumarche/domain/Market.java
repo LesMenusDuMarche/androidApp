@@ -1,5 +1,8 @@
 package fr.lesmenusdumarche.lesmenusdumarche.domain;
 
+import com.orm.SugarRecord;
+import com.orm.dsl.Table;
+
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -7,19 +10,17 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 /**
  * Created by maxime on 17/03/2016.
+ *
+ * Represents a market
  */
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Market {
-
-    @Getter
-    @Setter
-    Double id;
+public class Market extends PersistableEntity {
 
     @Getter
     @Setter
@@ -27,21 +28,17 @@ public class Market {
 
     @Getter
     @Setter
-    String dayOfWeek;
+    Integer dayOfWeek;
 
     @Getter
     @Setter
-    SimpleDateFormat hourStart;
+    String hourStart;
 
     @Getter
     @Setter
-    SimpleDateFormat hourEnd;
+    String hourEnd;
 
     @Getter
     @Setter
     GeoPoint position;
-
-    @Getter
-    @Setter
-    List<Receipe> receipes;
 }

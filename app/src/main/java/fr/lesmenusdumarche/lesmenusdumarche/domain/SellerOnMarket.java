@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.Builder;
+import lombok.Builder;
 
 /**
  * Created by maxime on 17/03/2016.
+ *
+ * Represents the position and attributes of a seller on a specific market
  */
 @Builder
 @NoArgsConstructor
@@ -16,6 +18,6 @@ public class SellerOnMarket {
 
     @Getter
     @Setter
-    Double id;
+    Long id;
 
 }
