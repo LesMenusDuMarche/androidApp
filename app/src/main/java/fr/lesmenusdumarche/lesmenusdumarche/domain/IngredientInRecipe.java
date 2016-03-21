@@ -1,5 +1,8 @@
 package fr.lesmenusdumarche.lesmenusdumarche.domain;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +17,7 @@ import lombok.Builder;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class IngredientInRecipe {
+public class IngredientInRecipe implements Parcelable {
 
     @Getter
     @Setter
@@ -27,4 +30,16 @@ public class IngredientInRecipe {
     @Getter
     @Setter
     String amount;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(id);
+        dest.writeString(label);
+        dest.writeString(amount);
+    }
 }

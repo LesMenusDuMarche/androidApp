@@ -42,7 +42,7 @@ public class Recipe extends PersistableEntity implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(title);
         dest.writeString(body);
-        dest.writeList(ingredients);
+        dest.writeTypedList(ingredients);
     }
 
     public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>()

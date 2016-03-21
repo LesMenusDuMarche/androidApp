@@ -1,6 +1,7 @@
 package fr.lesmenusdumarche.lesmenusdumarche.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -60,6 +61,9 @@ public class RecipesActivity extends AppCompatActivity {
                 Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
                 toast.show();
 
+                Intent intent = new Intent(RecipesActivity.this, MainActivity.class);
+                intent.putParcelableArrayListExtra("recipes", recipes);
+                startActivity(intent);
             }
         });
     }
