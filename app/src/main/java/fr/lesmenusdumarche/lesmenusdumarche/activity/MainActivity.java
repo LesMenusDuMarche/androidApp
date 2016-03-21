@@ -24,8 +24,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // TODO: Move this in map activity onCreate. It loads data
         Call<List<NavigationStep>> stepsRequest = RestManager.getNavigationStepService().list(new ArrayList<Recipe>());
-
+        // Request steps
         stepsRequest.enqueue(new Callback<List<NavigationStep>>() {
             @Override
             public void onResponse(Call<List<NavigationStep>> call, Response<List<NavigationStep>> response) {
@@ -39,12 +40,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
     static final int PICK_CONTACT_REQUEST = 1;  // The request code
 
     public void Selection_recettes(View v) {
-        Intent intent = new Intent(this, SelectionActivity.class);
+        Intent intent = new Intent(this, MenusActivity.class);
         startActivityForResult(intent, PICK_CONTACT_REQUEST);
     }
 }

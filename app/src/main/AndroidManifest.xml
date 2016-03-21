@@ -34,8 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MarketSelectActivity" />
-        <activity android:name=".activity.SelectionActivity"></activity>
+        <activity android:name=".activity.MenusActivity"></activity>
     </application>
 
 </manifest>
