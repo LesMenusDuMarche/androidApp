@@ -18,11 +18,11 @@ public class RestManager {
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
-    private static final ReceipeService RECEIPE_SERVICE = REST_ADAPTER.create(ReceipeService.class);
+    private static final RecipeService RECIPE_SERVICE = REST_ADAPTER.create(RecipeService.class);
     private static final NavigationStepService NAVIGATIONSTEP_SERVICE = REST_ADAPTER.create(NavigationStepService.class);
 
-    public static ReceipeService getReceipeService() {
-        return RECEIPE_SERVICE;
+    public static RecipeService getRecipeService() {
+        return RECIPE_SERVICE;
     }
     public static NavigationStepService getNavigationStepService() {
         return NAVIGATIONSTEP_SERVICE;

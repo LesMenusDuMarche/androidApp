@@ -1,8 +1,10 @@
 package fr.lesmenusdumarche.lesmenusdumarche.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,25 +24,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+    }
 
-        List<Receipe> receipes = new ArrayList<>();
-        receipes.add(Receipe.builder().title("Toto").body("Tata").build());
+    static final int PICK_CONTACT_REQUEST = 1;  // The request code
 
-        NavigationStepService nsservice = RestManager.getNavigationStepService();
-
-        Call<List<NavigationStep>> call = nsservice.list(receipes);
-
-        call.enqueue(new Callback<List<NavigationStep>>() {
-            @Override
-            public void onResponse(Call<List<NavigationStep>> call, Response<List<NavigationStep>> response) {
-                List<NavigationStep> toto = response.body();
-                Log.i("Fait", "Fait");
-            }
-
-            @Override
-            public void onFailure(Call<List<NavigationStep>> call, Throwable t) {
-                Log.i("Fait", "Fait");
-            }
-        });
+    public void Selection_recettes(View v) {
+        Intent intent = new Intent(this, Selection.class);
+        startActivityForResult(intent, PICK_CONTACT_REQUEST);
     }
 }

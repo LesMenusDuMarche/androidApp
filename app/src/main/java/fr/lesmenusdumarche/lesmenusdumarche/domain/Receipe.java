@@ -20,6 +20,10 @@ public class Receipe extends PersistableEntity {
 
     @Getter
     @Setter
+    Long id;
+
+    @Getter
+    @Setter
     String title;
 
     @Getter
