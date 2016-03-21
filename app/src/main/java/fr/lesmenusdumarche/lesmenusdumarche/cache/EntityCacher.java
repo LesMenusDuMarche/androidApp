@@ -18,20 +18,17 @@ import retrofit2.Response;
  * EntityCacher class
  * Caches in database the response of rest webservice, for all persisted entities of domain
  */
-public abstract class EntityCacher<T extends PersistableEntity> {
+public abstract class EntityCacher<RestService, T extends PersistableEntity> {
 
     /**
-     * Rest service used to request the list
+     * Rest call
      */
-    RestService<T> service = null;
+    Call<List<T>> restEntities = null;
 
     /**
      * Loads data from REST webservice and caches it in database, asynchronously
      */
     public void cacheFromRest() {
-        // Call the list rest service
-        Call<List<T>> restEntities = service.list();
-
         // Make the request and define the callback
         restEntities.enqueue(new Callback<List<T>>() {
             @Override

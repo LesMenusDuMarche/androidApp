@@ -10,7 +10,7 @@ import retrofit2.http.GET;
 /**
  * Created by maxime on 17/03/2016.
  */
-public interface ReceipeService extends RestService<Receipe> {
+public interface ReceipeService {
     @GET("receipe/")
     Call<List<Receipe>> list();
 }

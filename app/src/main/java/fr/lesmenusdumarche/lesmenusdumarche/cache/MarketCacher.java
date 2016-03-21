@@ -1,6 +1,7 @@
 package fr.lesmenusdumarche.lesmenusdumarche.cache;
 
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Market;
+import fr.lesmenusdumarche.lesmenusdumarche.restservice.MarketService;
 import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;
 
 /**
@@ -8,9 +9,9 @@ import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;
  *
  * Cacher for Market entities
  */
-public class MarketCacher extends EntityCacher<Market> {
+public class MarketCacher extends EntityCacher<MarketService, Market> {
 
     public MarketCacher() {
-        service = RestManager.getMarketService();
+        restEntities = RestManager.getMarketService().list();
     }
 }

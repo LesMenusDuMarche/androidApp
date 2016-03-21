@@ -8,4 +8,5 @@ import com.orm.SugarRecord;
  * All the entities that should be persisted inherits from this class
  */
 public abstract class PersistableEntity extends SugarRecord {
+    final public static String REST_URL = null;
 }

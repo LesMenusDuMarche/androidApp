@@ -2,6 +2,7 @@ package fr.lesmenusdumarche.lesmenusdumarche.cache;
 
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Market;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Receipe;
+import fr.lesmenusdumarche.lesmenusdumarche.restservice.ReceipeService;
 import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;
 
 /**
@@ -9,9 +10,9 @@ import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;
  *
  * Cacher for Receipe entities
  */
-public class ReceipeCacher extends EntityCacher<Receipe> {
+public class ReceipeCacher extends EntityCacher<ReceipeService, Receipe> {
 
     public ReceipeCacher() {
-        service = RestManager.getReceipeService();
+        restEntities = RestManager.getReceipeService().list();
     }
 }
