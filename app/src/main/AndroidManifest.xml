@@ -3,6 +3,8 @@
     package="fr.lesmenusdumarche.lesmenusdumarche">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:name="com.orm.SugarApp"
@@ -27,14 +29,15 @@
             android:value="fr.lesmenusdumarche.lesmenusdumarche.domain" />
 
         <!-- Activities -->
-        <activity android:name=".activity.MainActivity">
+        <activity android:name=".activity.MainActivity"></activity>
+        <activity android:name=".activity.RecipesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.RecipesActivity"></activity>
+        <activity android:name=".activity.NavigationActivity"></activity>
     </application>
 
 </manifest>

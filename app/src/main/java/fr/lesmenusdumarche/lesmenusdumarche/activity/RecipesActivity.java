@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +11,6 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +18,6 @@ import java.util.List;
 import fr.lesmenusdumarche.lesmenusdumarche.R;
 import fr.lesmenusdumarche.lesmenusdumarche.cache.RecipeCacher;
 import fr.lesmenusdumarche.lesmenusdumarche.command.ICommand;
-import fr.lesmenusdumarche.lesmenusdumarche.domain.IngredientInRecipe;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
 import lombok.Getter;
 import lombok.Setter;
@@ -90,16 +87,19 @@ public class RecipesActivity extends AppCompatActivity {
         validateRecipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String text = "";
+                // Get selected receipes
                 ArrayList<Recipe> recipes = recipeListViewAdapter.getSelectedRecipes();
+
+                /*String text = "";
                 for (Recipe recipe : recipes) {
                     text += recipe.getTitle() + "\n";
                 }
                 Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
-                toast.show();
+                toast.show();*/
 
-                Intent intent = new Intent(RecipesActivity.this, MainActivity.class);
-                intent.putParcelableArrayListExtra("recipes", recipes);
+                // Open Navigation activity with receipes
+                Intent intent = new Intent(RecipesActivity.this, NavigationActivity.class);
+                intent.putParcelableArrayListExtra(NavigationActivity.EXTRA_RECEIPES, recipes);
                 startActivity(intent);
             }
         });
@@ -233,7 +233,7 @@ public class RecipesActivity extends AppCompatActivity {
 
                 // On inflate la listView
                 LayoutInflater inflater = (LayoutInflater) getBaseContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                v = inflater.inflate(R.layout.list_recette_item, null);
+                v = inflater.inflate(R.layout.listview_recipe_row, null);
 
                 // On récupère la checkbox et on lui assigne un onClickListener pour mettre à jour le booléen correspondant
                 final CheckBox recipeCheckbox = (CheckBox) v.findViewById(R.id.recipe_checkbox);

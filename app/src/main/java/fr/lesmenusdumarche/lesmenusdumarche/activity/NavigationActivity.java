@@ -1,39 +1,48 @@
 package fr.lesmenusdumarche.lesmenusdumarche.activity;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 
 
 import fr.lesmenusdumarche.lesmenusdumarche.R;
+import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
+import fr.lesmenusdumarche.lesmenusdumarche.fragment.CheckListFragment;
+import fr.lesmenusdumarche.lesmenusdumarche.fragment.MapFragment;
 
+import android.os.Parcelable;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class NavigationActivity extends FragmentActivity {
+
+    // Extra keys
+    public final static String EXTRA_RECEIPES = "RECEIPES";
+
+    // UI Components
+    MapFragment mapFragment;
+    CheckListFragment checkListFragment;
+
+    // Data
+    protected List<Recipe> recipes = new ArrayList<>();
+
+    // Sensors
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_navigation);
 
-        // Check that the activity is using the layout version with
-        // the fragment_container FrameLayout
-        if (findViewById(R.id.fragment_map) != null) {
-            // However, if we're being restored from a previous state,
-            // then we don't need to do anything and should return or else
-            // we could end up with overlapping fragments.
-            if (savedInstanceState != null) {
-                return;
-            }
+        // UI Components
+        mapFragment = (MapFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_map);
+        checkListFragment = (CheckListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_checklist);
 
-            // Create a new Fragment to be placed in the activity layout
-            MapFragment firstFragment = new MapFragment();
+        // Get extras (receipes)
+        recipes = getIntent().getParcelableArrayListExtra(EXTRA_RECEIPES);
 
-            // In case this activity was started with special instructions from an
-            // Intent, pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
-
-            // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_map, firstFragment).commit();
-        }
+        // Sensors
+        // TODO: Get GPS location and pass it to map
     }
 }

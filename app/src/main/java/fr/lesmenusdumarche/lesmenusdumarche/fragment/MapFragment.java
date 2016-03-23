@@ -1,4 +1,4 @@
-package fr.lesmenusdumarche.lesmenusdumarche.activity;
+package fr.lesmenusdumarche.lesmenusdumarche.fragment;
 
 /**
  * Created by tremo on 21/03/16.
