@@ -19,12 +19,32 @@ import java.util.List;
 import fr.lesmenusdumarche.lesmenusdumarche.R;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.IngredientInRecipe;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
+import lombok.Getter;
+import lombok.Setter;
 
+/**
+ * Activity of recipes selection list
+ */
 public class RecipesActivity extends AppCompatActivity {
 
+    /**
+     * Validation button
+     */
     private Button validateRecipesButton;
+
+    /**
+     * Recipes ListView
+     */
     private ListView recipesListView;
+
+    /**
+     * Recipes ListView Adapter
+     */
     private RecipeListViewAdapter recipeListViewAdapter;
+
+    /**
+     * Embedded recipes
+     */
     private List<Recipe> recipes;
 
     @Override
@@ -33,23 +53,26 @@ public class RecipesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipes);
 
-        // Récupération des recettes
+        // Recipes loading
         recipes = getRecipes();
-        recipeListViewAdapter = new RecipeListViewAdapter(recipes);
 
-        // Références aux widgets de la vue
+        // UI Components
         recipesListView = (ListView) findViewById(R.id.recipes_list_view);
         validateRecipesButton = (Button) findViewById(R.id.validate_recipes);
 
-        // Listener sur le bouton de validation
-        onValidateListener();
+        // Set listener on validate button
+        validateRecipesButtonOnClickListener();
 
-        // Affichage
+        // Setting an adapter on our listview
+        recipeListViewAdapter = new RecipeListViewAdapter(recipes);
         recipesListView.setAdapter(recipeListViewAdapter);
 
     }
 
-    private void onValidateListener(){
+    /**
+     * Defines the behavior after click on validate button
+     */
+    private void validateRecipesButtonOnClickListener(){
         validateRecipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,6 +91,10 @@ public class RecipesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Loads all available recipes
+     * @return The available recipes
+     */
     private List<Recipe> getRecipes(){
 
         List<Recipe> recipes = new ArrayList<Recipe>();
@@ -94,17 +121,30 @@ public class RecipesActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * ListViewAdapter to display Recipes objects on a ListView
+     */
     private class RecipeListViewAdapter extends BaseAdapter{
 
+        /**
+         * List of decoratedRecipes, as we manipulate DecoratedRecipe and not Recipe
+         */
         private List<DecoratedRecipe> decoratedRecipes = new ArrayList<DecoratedRecipe>();
 
-        // Constructeur qui instancie la liste de recette décorée
+        /**
+         * Constructor that converts Recipes into DecoratedRecipes
+         * @param recipes
+         */
         public RecipeListViewAdapter(List<Recipe> recipes){
             for(Recipe recipe : recipes){
                 decoratedRecipes.add(new DecoratedRecipe(recipe));
             }
         }
 
+        /**
+         * Returns the selected recipes
+         * @return The selected recipes (as I said above, no surprise.)
+         */
         public ArrayList<Recipe> getSelectedRecipes(){
             ArrayList<Recipe> selectedRecipes = new ArrayList<Recipe>();
             for(DecoratedRecipe dr : decoratedRecipes){
@@ -115,42 +155,44 @@ public class RecipesActivity extends AppCompatActivity {
             return selectedRecipes;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public int getCount() {
             return recipes.size();
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public Object getItem(int position) {
             return recipes.get(position);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public long getItemId(int position) {
             return 0;
         }
 
-        // Classe contenant une recette et un booléen selectionné/pas sélectionné
+        /**
+         * Decorates Recipe class adding a selected/unselected bool
+         */
         private class DecoratedRecipe{
 
+            @Getter @Setter
             private boolean isSelected;
+
+            @Getter
             private Recipe recipe;
 
             public DecoratedRecipe(Recipe recipe){
                 this.recipe = recipe;
                 isSelected = false;
-            }
-
-            public boolean isSelected() {
-                return isSelected;
-            }
-
-            public void setIsSelected(boolean isSelected) {
-                this.isSelected = isSelected;
-            }
-
-            public Recipe getRecipe(){
-                return recipe;
             }
         }
 
@@ -177,7 +219,7 @@ public class RecipesActivity extends AppCompatActivity {
                     public void onClick(View v) {
                         decoratedRecipes
                                 .get(position)
-                                .setIsSelected(((CheckBox) v).isChecked());
+                                .setSelected(((CheckBox) v).isChecked());
                     }
                 });
                 holder.recipeCheckbox = recipeCheckbox;
