@@ -14,21 +14,10 @@
         android:layout_weight="1"
         >
 
-        <android.support.v7.widget.AppCompatCheckBox
-            android:id="@+id/recette_nom"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:textStyle="bold"
-            android:checked="false"
-            android:onClick="click_on_checkbox"
-            />
-
-        <TextView android:id="@+id/recette_description"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:textSize="@dimen/activity_horizontal_margin"
-            android:layout_alignRight="@+id/recette_nom"
-            android:layout_alignEnd="@+id/recette_nom" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recipe_checkbox" />
 
     </LinearLayout>
 

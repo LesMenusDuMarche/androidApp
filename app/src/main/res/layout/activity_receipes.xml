@@ -13,8 +13,7 @@
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/list_recette"
-        android:layout_above="@+id/valider"
+        android:id="@+id/recipes_list_view"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -23,12 +22,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Valider sélection"
-        android:id="@+id/valider"
-        android:onClick="valider_choix_recettes"
+        android:text="@string/validate_recipes"
+        android:id="@+id/validate_recipes"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/list_recette"
-        android:layout_alignEnd="@+id/list_recette" />
+        android:layout_alignParentStart="true" />
 </RelativeLayout>

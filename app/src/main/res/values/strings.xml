@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">LesMenusDuMarche</string>
+    <string name="validate_recipes">Valider</string>
 </resources>
