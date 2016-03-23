@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.lesmenusdumarche.lesmenusdumarche.R;
+import fr.lesmenusdumarche.lesmenusdumarche.command.ICommand;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.NavigationStep;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
 import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import fr.lesmenusdumarche.lesmenusdumarche.R;
+import fr.lesmenusdumarche.lesmenusdumarche.cache.RecipeCacher;
+import fr.lesmenusdumarche.lesmenusdumarche.command.ICommand;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.IngredientInRecipe;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
 import lombok.Getter;
@@ -53,6 +56,9 @@ public class RecipesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receipes);
 
+        // Cache recipes from REST
+        cacheRecipesFromRest();
+
         // Recipes loading
         recipes = getRecipes();
 
@@ -64,9 +70,17 @@ public class RecipesActivity extends AppCompatActivity {
         validateRecipesButtonOnClickListener();
 
         // Setting an adapter on our listview
-        recipeListViewAdapter = new RecipeListViewAdapter(recipes);
+        recipeListViewAdapter = new RecipeListViewAdapter();
         recipesListView.setAdapter(recipeListViewAdapter);
+        loadDataInListView(getRecipes());
 
+
+    }
+
+    private void cacheRecipesFromRest() {
+        RecipeCacher cacher = new RecipeCacher();
+        cacher.setOnCachedCommand(new OnRecipesCachedCommand(this));
+        cacher.cacheFromRest();
     }
 
     /**
@@ -77,10 +91,10 @@ public class RecipesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String text = "";
-                ArrayList<Recipe> recipes =  recipeListViewAdapter.getSelectedRecipes();
-               for(Recipe recipe : recipes){
-                   text += recipe.getTitle() + "\n";
-               }
+                ArrayList<Recipe> recipes = recipeListViewAdapter.getSelectedRecipes();
+                for (Recipe recipe : recipes) {
+                    text += recipe.getTitle() + "\n";
+                }
                 Toast toast = Toast.makeText(getApplicationContext(), text, Toast.LENGTH_LONG);
                 toast.show();
 
@@ -96,8 +110,10 @@ public class RecipesActivity extends AppCompatActivity {
      * @return The available recipes
      */
     private List<Recipe> getRecipes(){
+        // Load recipes from database
+        return Recipe.listAll(Recipe.class);
 
-        List<Recipe> recipes = new ArrayList<Recipe>();
+        /*List<Recipe> recipes = new ArrayList<Recipe>();
 
         Recipe recipe = new Recipe();
         recipe.setBody("<html/>");
@@ -117,7 +133,12 @@ public class RecipesActivity extends AppCompatActivity {
         recipe.setIngredients(ingredients);
         recipes.add(recipe);
 
-        return recipes;
+        return recipes;*/
+    }
+
+    public void loadDataInListView(List<Recipe> recipes) {
+        recipeListViewAdapter.setRecipes(recipes);
+        recipeListViewAdapter.notifyDataSetChanged();
     }
 
 
@@ -131,11 +152,13 @@ public class RecipesActivity extends AppCompatActivity {
          */
         private List<DecoratedRecipe> decoratedRecipes = new ArrayList<DecoratedRecipe>();
 
+
         /**
-         * Constructor that converts Recipes into DecoratedRecipes
-         * @param recipes
+         * Sets recipes on adapter
+         * @param recipes Recipes do display on ListView
          */
-        public RecipeListViewAdapter(List<Recipe> recipes){
+        public void setRecipes(List<Recipe> recipes){
+            decoratedRecipes.clear();
             for(Recipe recipe : recipes){
                 decoratedRecipes.add(new DecoratedRecipe(recipe));
             }
@@ -233,6 +256,23 @@ public class RecipesActivity extends AppCompatActivity {
             holder.recipeCheckbox.setText(recipe.getTitle());
 
             return v;
+        }
+    }
+
+    private class OnRecipesCachedCommand implements ICommand {
+
+        private RecipesActivity activity;
+
+        public OnRecipesCachedCommand(RecipesActivity recipesActivity) {
+            this.activity = recipesActivity;
+        }
+
+        /**
+         * This command will be ran after caching have been done
+         */
+        @Override
+        public void execute() {
+            activity.loadDataInListView(activity.getRecipes());
         }
     }
 }

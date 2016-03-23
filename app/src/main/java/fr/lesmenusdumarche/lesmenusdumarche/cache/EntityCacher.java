@@ -4,9 +4,11 @@ import android.util.Log;
 
 import java.util.List;
 
+import fr.lesmenusdumarche.lesmenusdumarche.command.ICommand;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Market;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.PersistableEntity;
 import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;
+import lombok.Setter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,6 +25,12 @@ public abstract class EntityCacher<T extends PersistableEntity> {
      * Rest call
      */
     Call<List<T>> restEntities = null;
+
+    /**
+     * Command executed when entities have been cached
+     */
+    @Setter
+    ICommand onCachedCommand = null;
 
     /**
      * Loads data from REST webservice and caches it in database, asynchronously
@@ -52,6 +60,10 @@ public abstract class EntityCacher<T extends PersistableEntity> {
         for(T e : entities) {
             // Persists the element in db
             e.save();
+        }
+
+        if(onCachedCommand != null) {
+            onCachedCommand.execute();
         }
     }
 }
