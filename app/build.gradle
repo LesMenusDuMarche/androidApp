@@ -30,4 +30,8 @@ dependencies {
     compile 'com.github.satyan:sugar:1.4'
     compile 'org.osmdroid:osmdroid-android:5.1@aar'
     compile 'com.github.MKergall.osmbonuspack:OSMBonusPack:v5.7'
+    compile ('io.nlopez.smartlocation:library:3.2.1') {
+        transitive = false
+    }
+    compile 'com.google.android.gms:play-services-location:8.4.0'
 }
