@@ -22,11 +22,11 @@ public class NavigationStep {
 
     @Getter @Setter
     @SerializedName("lat")
-    private Long latitude;
+    private Double latitude;
 
     @Getter @Setter
     @SerializedName("long")
-    private Long longitude;
+    private Double longitude;
 
     @Getter @Setter
     private Seller seller;

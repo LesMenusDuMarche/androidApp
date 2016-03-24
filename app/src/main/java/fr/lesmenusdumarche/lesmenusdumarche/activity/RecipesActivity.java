@@ -27,6 +27,7 @@ import lombok.Setter;
  */
 public class RecipesActivity extends AppCompatActivity {
 
+    // UI Elements
     /**
      * Validation button
      */
@@ -37,6 +38,7 @@ public class RecipesActivity extends AppCompatActivity {
      */
     private ListView recipesListView;
 
+    // Data
     /**
      * Recipes ListView Adapter
      */

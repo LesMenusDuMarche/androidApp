@@ -1,7 +1,6 @@
 package fr.lesmenusdumarche.lesmenusdumarche.cache;
 
 import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
-import fr.lesmenusdumarche.lesmenusdumarche.restservice.RecipeService;
 import fr.lesmenusdumarche.lesmenusdumarche.restservice.RestManager;
 
 /**
