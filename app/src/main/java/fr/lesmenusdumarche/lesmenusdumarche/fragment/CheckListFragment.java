@@ -87,8 +87,8 @@ public class CheckListFragment extends Fragment {
             }
         }
         /**
-         * Returns the selected recipes
-         * @return The selected recipes (as I said above, no surprise.)
+         * Checks the completion of the ingredients list
+         * @return True if all ingredients select
          */
         public boolean isComplete(){
             for(DecoratedIngrdientInReceipe dr : decoratedIngredients){
