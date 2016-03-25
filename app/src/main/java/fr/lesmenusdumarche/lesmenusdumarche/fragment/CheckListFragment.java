@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +21,7 @@ import java.util.List;
 import fr.lesmenusdumarche.lesmenusdumarche.R;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.IngredientInRecipe;
 import fr.lesmenusdumarche.lesmenusdumarche.domain.NavigationStep;
+import fr.lesmenusdumarche.lesmenusdumarche.domain.Recipe;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -83,7 +86,18 @@ public class CheckListFragment extends Fragment {
                 decoratedIngredients.add(new DecoratedIngrdientInReceipe(ingredient));
             }
         }
-
+        /**
+         * Returns the selected recipes
+         * @return The selected recipes (as I said above, no surprise.)
+         */
+        public boolean isComplete(){
+            for(DecoratedIngrdientInReceipe dr : decoratedIngredients){
+                if(!dr.isSelected){
+                    return false;
+                }
+            }
+            return true;
+        }
         /**
          * {@inheritDoc}
          */
@@ -127,6 +141,7 @@ public class CheckListFragment extends Fragment {
 
         private class IngredientHolder {
             public CheckBox ingredientCheckbox;
+            public TextView ingredientAmount;
         }
 
         @Override
@@ -143,23 +158,30 @@ public class CheckListFragment extends Fragment {
 
                 // On récupère la checkbox et on lui assigne un onClickListener pour mettre à jour le booléen correspondant
                 final CheckBox recipeCheckbox = (CheckBox) v.findViewById(R.id.ingredien_checkbox);
+                final TextView recipeAmount = (TextView) v.findViewById(R.id.ingredientAmountView);
                 recipeCheckbox.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         decoratedIngredients
                                 .get(position)
                                 .setSelected(((CheckBox) v).isChecked());
+                        if(isComplete()){
+                            Toast.makeText(getContext(), "Vous avez fini vos courses, bravo !", Toast.LENGTH_LONG).show();
+                        }
+
                     }
                 });
                 holder.ingredientCheckbox = recipeCheckbox;
+                holder.ingredientAmount = recipeAmount;
                 v.setTag(holder);
-            }
+        }
             else
                 holder = (IngredientHolder) v.getTag();
 
             // Affichage du texte
             IngredientInRecipe ingredient = decoratedIngredients.get(position).getIngredient();
             holder.ingredientCheckbox.setText(ingredient.getLabel());
+            holder.ingredientAmount.setText(ingredient.getAmount());
 
             return v;
         }
